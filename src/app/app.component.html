@@ -2,11 +2,19 @@
 
 <div class="container w-1/3 m-auto mt-8 text-center">
    <h1 class="font-bold mb-4 text-lg">{{title | titlecase}}</h1>
-
+   <input
+   type="text"
+   class="mb-2 border py-2 px-4 w-full"
+   placeholder="Filter products..."
+   [(ngModel)]="term"
+   >
    <p *ngIf="loading" class="text-center text-lg">Loading...</p>
 
-   <app-product
-   *ngFor="let item of products$ | async"
-   [product]="item"
-   ></app-product>
+   <div *ngIf="products$ | async as products">
+    <app-product
+      *ngFor="let product of products | filterProducts: term"
+      [product]="product"
+    ></app-product>
+   </div>
+
 </div>
